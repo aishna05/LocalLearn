@@ -1,0 +1,11 @@
+{% extend "nav.html" %}
+{% block content %}
+<h2>Share Note: {{ note.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Recipient Username:</label>
+    <input type="text" name="username" required>
+    <button type="submit">Share</button>
+</form>
+{% endblock content %}
+

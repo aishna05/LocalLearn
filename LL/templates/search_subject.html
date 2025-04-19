@@ -1,0 +1,18 @@
+{% block search_subject %}
+
+{% endblock search_subject %}
+{% block search_form %}
+<div class="container">
+    <h2>Search Subjects</h2>
+    <form method="POST" action="{% url 'search_subject' %}">
+        {% csrf_token %}
+        <label for="search_query">Search:</label>
+        <input type="text" id="search_query" name="search_query" required><br><br>
+        <button type="submit">Search</button>
+    </form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+{% endblock search_form %}
+

@@ -1,0 +1,41 @@
+{% load static %}
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('LocalLearn/static/service-worker.js')
+            .then(function(registration) {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+              console.log('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+      
+</body>

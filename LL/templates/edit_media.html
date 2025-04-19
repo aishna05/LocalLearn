@@ -1,0 +1,19 @@
+{% block edit_media %}
+<div class="container">
+    <h2>Edit Media for {{ note.title }}</h2>
+    <form method="POST" action="{% url 'edit_media' note.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="media_file">Upload New Media:</label>
+        <input type="file" id="media_file" name="media_file"><br><br>
+
+        {% if note.media %}
+            <p>Current Media: {{ note.media }}</p>
+        {% endif %}
+
+        <button type="submit">Update Media</button>
+    </form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+{% endblock edit_media %}

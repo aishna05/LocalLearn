@@ -1,0 +1,11 @@
+<h2>Notes for {{ subject.name }}</h2>
+<ul>
+    {% for note in notes %}
+        <li>
+            <a href="{% url 'view_note' note_id=note.id %}">
+                {{ note.title }}
+            </a>
+            <a href="{% url 'delete_note' note_id=note.id %}" class="btn btn-danger btn-sm">Delete Note</a>
+        </li>
+    {% endfor %}
+</ul>

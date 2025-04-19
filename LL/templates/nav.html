@@ -1,0 +1,38 @@
+{% load static %}
+<html>
+<head>
+    <title>LocalLearn</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Login</a>
+        {% if user %}
+            <span class="welcome">Welcome, {{ user.username }}!</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock content %}  
+        {% block add_subject %}
+        {% endblock add_subject %}  
+        
+    </div>
+</body>
+<script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('LocalLearn/static/service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('Service Worker registration failed:', error);
+        });
+    }
+  </script>
+  
+</html>

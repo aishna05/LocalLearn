@@ -1,0 +1,7 @@
+<!-- import_notes.html -->
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="json_file" accept=".json" required>
+    <button type="submit">Import Notes</button>
+</form>

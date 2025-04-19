@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Offline File Sharing</title>
+</head>
+<body>
+    <h2>Offline File Sharing with Django</h2>
+
+    <!-- Download Button -->
+    <form action="{% url 'download' %}" method="get">
+        <button type="submit">Download My Data</button>
+    </form>
+
+    <hr>
+
+    <!-- Upload Form -->
+    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="datafile" required>
+        <button type="submit">Upload Data</button>
+    </form>
+</body>
+</html>

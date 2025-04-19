@@ -1,0 +1,70 @@
+{% extends "nav.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Page Title -->
+    <h2 class="mb-4 text-center">📚 Dashboard: Subjects & Notes</h2>
+
+    <!-- Search Bar -->
+    {% comment %} <div class="mb-4">
+        {% include "search_notes.html" %}
+    </div> {% endcomment %}
+
+    <!-- Action Buttons -->
+    <div class="mb-4 text-center">
+        <a href="{% url 'add_subject' %}" class="btn btn-outline-light me-2">➕ Add Subject</a>
+        <a href="{% url 'add_note' %}" class="btn btn-outline-light me-2">📝 Add Note</a>
+        <a href="{% url 'share_notes_list' %}" class="btn btn-outline-light me-2">🔗 Share Notes</a>
+        <a href="{% url 'export_notes' %}" class="btn btn-outline-light me-2">📤 Export Notes</a>
+        <a href="{% url 'shared_notes' %}" class="btn btn-outline-light">👥 View Shared Notes</a>
+        <a href="{% url 'search_notes' %}" class="btn btn-outline-light">Search Notes</a>
+    </div>
+
+    <!-- Subject-wise Notes -->
+    <ul class="list-group">
+        {% for subject in subjects %}
+            <li class="list-group-item bg-dark text-light border-light mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{ subject.name }}</strong>
+                    <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger btn-sm">Delete Subject</a>
+                </div>
+
+                <ul class="list-group mt-2">
+                    <li class="list-group-item bg-secondary">
+                        <a href="{% url 'add_note' %}?subject={{ subject.id }}" class="btn btn-primary btn-sm">➕ Add Note</a>
+                    </li>
+
+                    {% for note in notes %}
+                        {% if note.subject.id == subject.id %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-secondary">
+                                {{ note.title }}
+                                <div>
+                                    <a href="{% url 'view_note' note.id %}" class="btn btn-info btn-sm me-1">🔍 View</a>
+                                    <a href="{% url 'edit_note' note.id %}" class="btn btn-warning btn-sm me-1">✏️ Edit</a>
+                                    <a href="{% url 'delete_note' note.id %}" class="btn btn-danger btn-sm">🗑️ Delete</a>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted">No subjects added yet.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Add Subject Section -->
+    {% comment %} <div class="mt-5">
+        {% block add_subject %}
+            {% include "add_subject.html" %}
+        {% endblock add_subject %}
+    </div> {% endcomment %}
+
+    <!-- Shared Notes Section -->
+    <div class="mt-5">
+        {% block shared_notes %}
+            {% include "shared_notes.html" %}
+        {% endblock shared_notes %}
+    </div>
+</div>
+{% endblock content %}

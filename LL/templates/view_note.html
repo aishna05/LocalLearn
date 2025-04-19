@@ -1,0 +1,42 @@
+{% extends "nav.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card bg-dark text-light">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2>{{ note.title }}</h2>
+            <div>
+                <a href="{% url 'edit_note' note.id %}" class="btn btn-warning btn-sm me-2">✏️ Edit</a>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-sm">Back</a>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <p class="text-muted mb-3">
+                Subject: {{ note.subject.name }} | 
+                Created: {{ note.created_at|date:"F j, Y" }} | 
+                Last Updated: {{ note.updated_at|date:"F j, Y" }}
+            </p>
+            
+            <div class="note-content">
+                {{ note.content|linebreaks }}
+            </div>
+
+            {% if note.media.all %}
+                <div class="mt-4">
+                    <h4>Attachments</h4>
+                    <ul class="list-unstyled">
+                        {% for media in note.media.all %}
+                            <li class="mb-2">
+                                <a href="{{ media.file.url }}" class="btn btn-outline-light btn-sm">
+                                    📎 {{ media.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

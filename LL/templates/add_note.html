@@ -1,0 +1,40 @@
+{% extends "nav.html" %}
+{% block content %}
+<div class="container">
+    <h2>Add New Note</h2>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST" action="{% url 'add_note' %}">
+        {% csrf_token %}
+        
+        {% if subject_id %}
+            <input type="hidden" name="subject" value="{{ subject_id }}">
+        {% else %}
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <select name="subject" id="subject" class="form-control" required>
+                    <option value="">Select a subject</option>
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required class="form-control" rows="5"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Note</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

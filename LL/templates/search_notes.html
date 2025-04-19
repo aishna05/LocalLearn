@@ -1,0 +1,36 @@
+{% block search_notes %}
+{% if notes %}
+<div class="container">
+    <h2>Search Results</h2>
+    <ul class="note-list">
+        {% for note in notes %}
+            <li>
+                <strong>{{ note.title }}</strong> - {{ note.content }}
+                <a href="{% url 'edit_note' note.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'delete_note' note.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes found.</p>
+{% endif %}
+{% endblock search_notes %}
+{% block search_form %}
+<div class="container">
+    <h2>Search Notes</h2>
+    <form method="GET" action="{% url 'search_notes' %}" class="search-form">
+        <div class="form-group">
+            <input type="text" 
+                   name="query" 
+                   class="form-control" 
+                   placeholder="Search notes..." 
+                   value="{{ request.GET.query|default:'' }}"
+                   required>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+{% endblock search_form %}

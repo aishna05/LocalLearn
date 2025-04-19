@@ -1,0 +1,25 @@
+{% block shared_notes %}
+<h2>Sent Notes</h2>
+<ul>
+    {% for shared in sent %}
+        <li>
+            <a href="{% url 'note_detail' shared.note.id %}">
+                {{ shared.note.title }}
+            </a> 
+            shared with {{ shared.recipient.username }} on {{ shared.shared_at }}
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Received Notes</h2>
+<ul>
+    {% for shared in received %}
+        <li>
+            <a href="{% url 'note_detail' shared.note.id %}">
+                {{ shared.note.title }}
+            </a> 
+            shared by {{ shared.sender.username }} on {{ shared.shared_at }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock shared_notes %}
